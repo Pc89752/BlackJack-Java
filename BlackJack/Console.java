@@ -48,4 +48,17 @@ public class Console {
             }
         }
     }
+
+    public boolean getYorN() {
+        while (true) {
+            switch (getString().toUpperCase()) {
+                case "Y":
+                    return true;
+                case "N":
+                    return false;
+                default:
+                    System.out.println("Please enter correctly");
+            }
+        }
+    }
 }
