@@ -1,12 +1,13 @@
 package BlackJack.Players;
 
 import java.security.SecureRandom;
+
+import BlackJack.BlackJack;
 import BlackJack.Cards.Card;
 
 public class AI extends Player{
     private int bPoint=0;
-    //TODO connect to the main AIDB
-    private AIDB aidb = new AIDB(4);
+    private AIDB aidb = BlackJack.AIDB;
     SecureRandom srd = new SecureRandom();
 
     public AI(String name) {
