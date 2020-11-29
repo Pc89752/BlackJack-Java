@@ -10,8 +10,8 @@ public class BlackJack {
 
     public static AIDB AIDB;
     public static User user;
-    public static Dealer dealer;
-    public static Deck deck;
+    public static Dealer dealer = new Dealer();
+    public static Deck deck = new Deck();
     public static Stack<Card> stack = new Stack<>();
 
     public static void main(String[] args) {
@@ -24,10 +24,10 @@ public class BlackJack {
         System.out.print("What is your name ? :");
         user = new User(console.getString());
 
-        shuffle();  //Insert cards in the stack
-
         //Set AI
         setAI();
+
+        shuffle();  //Insert cards in the stack
 
         //Draw Seen
         user.addSeen(stack.pop());
@@ -65,6 +65,7 @@ public class BlackJack {
                 continue;
             }else{
                 AIDB = new AIDB(num);
+                return;
             }    
         }
     }

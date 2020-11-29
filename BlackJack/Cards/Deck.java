@@ -7,7 +7,7 @@ public class Deck {
     SecureRandom srd =new SecureRandom();
     private ArrayList<Card> deck = new ArrayList<>();
 
-    Deck() {
+    public Deck() {
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 deck.add(new Card(suit, rank));
