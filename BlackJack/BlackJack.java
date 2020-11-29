@@ -20,14 +20,20 @@ public class BlackJack {
     }
 
     public void run() {
-        //1.1> Constructing players and input name :
+        //Constructing User and input name :
 
         System.out.print("What is your name ? :");
         player = new Player(console.getString());
 
-        shuffle();  //Inser cards in the stack
+        shuffle();  //Insert cards in the stack
 
-        
+        //TODO Set AI
+
+        //TODO Draw Seen
+
+        //TODO Draw Blind
+
+        //TODO Comparing points
     }
 
     public void shuffle() {
@@ -38,5 +44,6 @@ public class BlackJack {
         }
         AIDB.shuffle();
     }
+
 
 }
