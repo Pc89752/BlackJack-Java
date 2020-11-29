@@ -20,6 +20,7 @@ public class Player {
     }
 
     public void addSeen(Card card) {
+        System.out.println(name +" draw " +card);
         point += card.getValue();
         seen = card;
     }
@@ -30,6 +31,7 @@ public class Player {
 
     public void addBlind(Card card) {
         point += card.getValue();
+        BlackJack.BlackJack.AIDB.addBlind(card.getValue());
         if(toDraw == true)
             blind.add(card);
     }

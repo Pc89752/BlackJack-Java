@@ -5,10 +5,9 @@ import java.util.Scanner;
 public class Console {
     Scanner sc=new Scanner(System.in);
 
-    public int getInt(String str) {
+    public int getInt() {
         while (true) {
             try {
-                System.out.print(str);
                 int input = sc.nextInt();
                 sc.nextLine();
                 return input;

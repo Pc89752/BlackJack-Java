@@ -14,8 +14,16 @@ public class AIDB {
         }
     }
 
+    public void addBlind(int blind) {
+        this.blind += blind;
+    }
+
     public void addAI(AI AI) {
         AIList.add(AI);
+    }
+
+    public ArrayList<AI> getAIList() {
+        return AIList;
     }
 
     public int getLeft() {

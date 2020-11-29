@@ -9,7 +9,7 @@ public class BlackJack {
     Console console = new Console();
 
     public static AIDB AIDB;
-    public static Player player;
+    public static User user;
     public static Dealer dealer;
     public static Deck deck;
     public static Stack<Card> stack = new Stack<>();
@@ -21,17 +21,28 @@ public class BlackJack {
 
     public void run() {
         //Constructing User and input name :
-
         System.out.print("What is your name ? :");
-        player = new Player(console.getString());
+        user = new User(console.getString());
 
         shuffle();  //Insert cards in the stack
 
-        //TODO Set AI
+        //Set AI
+        setAI();
 
-        //TODO Draw Seen
+        //Draw Seen
+        user.addSeen(stack.pop());
+        dealer.addSeen(stack.pop());
+        for (AI ai : AIDB.getAIList()) {
+            ai.addSeen(stack.pop());
+        }
 
-        //TODO Draw Blind
+        //Draw Blind
+        //TODO Need to adjiust something when draw blind
+        user.addBlind(stack.pop());
+        dealer.addBlind(stack.pop());
+        for (AI ai : AIDB.getAIList()) {
+            ai.addBlind(stack.pop());
+        }
 
         //TODO Comparing points
     }
@@ -45,5 +56,16 @@ public class BlackJack {
         AIDB.shuffle();
     }
 
-
+    public void setAI() {
+        System.out.println("How many AI do you want ? (0~5): ");
+        while(true){
+            int num = console.getInt();
+            if(num <0 || num > 5){
+                System.out.println("Please enter correctly");
+                continue;
+            }else{
+                AIDB = new AIDB(num);
+            }    
+        }
+    }
 }
