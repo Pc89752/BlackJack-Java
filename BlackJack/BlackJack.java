@@ -31,10 +31,10 @@ public class BlackJack {
 
         //Draw Seen
         user.addSeen(stack.pop());
-        dealer.addSeen(stack.pop());
         for (AI ai : AIDB.getAIList()) {
             ai.addSeen(stack.pop());
         }
+        dealer.addSeen(stack.pop());
 
         //Draw Blind
         //TODO Need to adjiust something when draw blind
