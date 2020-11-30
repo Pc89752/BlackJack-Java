@@ -9,8 +9,9 @@ public class User extends Player{
         super(name);
     }
     
+    @Override
     public void toDraw() {
         System.out.print("Continue to draw ? (y/n): ");
-        super.toDraw(cs.getYorN());
+        super.setToDraw(cs.getYorN());
     }
 }

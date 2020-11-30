@@ -1,10 +1,11 @@
 package BlackJack.Players;
 
 import java.util.ArrayList;
-
+import BlackJack.BlackJack;
 import BlackJack.Cards.Card;
 
 public class Player {
+    private int turn = 1;
     private Card seen;
     private ArrayList<Card> blind = new ArrayList<>();
     private int point = 0;
@@ -29,11 +30,18 @@ public class Player {
         return seen;
     }
 
-    public void addBlind(Card card) {
+    public void addBlind() {
+        if(turn != 1)
+            toDraw();
+        if(toDraw == false)
+            return;
+            
+        Card card = BlackJack.stack.pop();
         point += card.getValue();
-        BlackJack.BlackJack.AIDB.addBlind(card.getValue());
-        if(toDraw == true)
-            blind.add(card);
+        BlackJack.AIDB.addBlind(card.getValue());
+        blind.add(card);
+        System.out.println(name +" draw a card");
+        turn++;
     }
     
     public ArrayList<Card> getBlind() {
@@ -45,10 +53,16 @@ public class Player {
     }
 
     public void cleanHand() {
+        turn = 0;
         blind.clear();
     }
 
-    public void toDraw(boolean toDraw) {
+    public void setToDraw(boolean toDraw) {
         this.toDraw = toDraw;
     }
+
+    public void toDraw() {
+        
+    }
+
 }

@@ -6,6 +6,7 @@ import BlackJack.Players.*;
 import BlackJack.Cards.*;
 
 public class BlackJack {
+
     Console console = new Console();
 
     public static AIDB AIDB;
@@ -23,26 +24,19 @@ public class BlackJack {
         //Constructing User and input name :
         System.out.print("What is your name ? :");
         user = new User(console.getString());
-
-        //Set AI
-        setAI();
+        setAI();    //Set AI
 
         shuffle();  //Insert cards in the stack
 
-        //Draw Seen
-        user.addSeen(stack.pop());
-        for (AI ai : AIDB.getAIList()) {
-            ai.addSeen(stack.pop());
-        }
-        dealer.addSeen(stack.pop());
+        drawSeen(); //Draw Seen
 
         //Draw Blind
-        //TODO Need to adjiust something when draw blind
-        user.addBlind(stack.pop());
-        dealer.addBlind(stack.pop());
+        //FIXME Need to adjust something when draw blind
+        user.addBlind();
         for (AI ai : AIDB.getAIList()) {
             ai.addBlind(stack.pop());
         }
+        dealer.addBlind();
 
         //TODO Comparing points
     }
@@ -68,5 +62,14 @@ public class BlackJack {
                 return;
             }    
         }
+    }
+
+    public void drawSeen() {
+        user.addSeen(stack.pop());
+        for (AI ai : AIDB.getAIList()) {
+            ai.addSeen(stack.pop());
+        }
+        dealer.addSeen(stack.pop());
+
     }
 }

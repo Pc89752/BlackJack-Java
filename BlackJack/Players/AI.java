@@ -14,16 +14,17 @@ public class AI extends Player{
         super(name);
     }
 
+    @Override
     public void toDraw() {
         double psbNum = ((double)aidb.getLeft() +bPoint)/52;
         double will = srd.nextDouble()%3;
         //To confirm whether will be busted
         boolean toDraw = (psbNum +will) +getPoint() < 21;
-        super.toDraw(toDraw);
+        super.setToDraw(toDraw);
     }
 
     public void addBlind(Card card) {
-        super.addBlind(card);
+        super.addBlind();
         this.bPoint += bPoint;
     }
 
