@@ -21,24 +21,24 @@ public class BlackJack {
     }
 
     public void run() {
-        //Constructing User and input name :
+        // Constructing User and input name :
         System.out.print("What is your name ? :");
         user = new User(console.getString());
-        setAI();    //Set AI
+        setAI(); // Set AI
 
-        shuffle();  //Insert cards in the stack
+        shuffle(); // Insert cards in the stack
 
-        drawSeen(); //Draw Seen
+        drawSeen(); // Draw Seen
 
-        //Draw Blind
-        //FIXME Need to adjust something when draw blind
-        user.addBlind();
-        for (AI ai : AIDB.getAIList()) {
-            ai.addBlind(stack.pop());
-        }
-        dealer.addBlind();
+        // Draw Blind
+        // FIXME Doesnt need to say "Give up the draw" every time.
+        do {
+            drawBlind();
+        } while (isDrawing());
 
-        //TODO Comparing points
+        // TODO Close Accounts
+
+        // TODO Comparing points
     }
 
     public void shuffle() {
@@ -52,15 +52,15 @@ public class BlackJack {
 
     public void setAI() {
         System.out.println("How many AI do you want ? (0~5): ");
-        while(true){
+        while (true) {
             int num = console.getInt();
-            if(num <0 || num > 5){
+            if (num < 0 || num > 5) {
                 System.out.println("Please enter correctly");
                 continue;
-            }else{
+            } else {
                 AIDB = new AIDB(num);
                 return;
-            }    
+            }
         }
     }
 
@@ -71,5 +71,24 @@ public class BlackJack {
         }
         dealer.addSeen(stack.pop());
 
+    }
+
+    public void drawBlind() {
+        user.addBlind();
+        for (AI ai : AIDB.getAIList()) {
+            ai.addBlind(stack.pop());
+        }
+        dealer.addBlind();
+    }
+
+    public boolean isDrawing() {
+        if (user.isToDraw())
+            return true;
+        for (AI ai : AIDB.getAIList()) {
+            if (ai.isToDraw()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

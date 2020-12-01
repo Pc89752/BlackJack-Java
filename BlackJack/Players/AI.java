@@ -7,7 +7,6 @@ import BlackJack.Cards.Card;
 
 public class AI extends Player{
     private int bPoint=0;
-    private AIDB aidb = BlackJack.AIDB;
     SecureRandom srd = new SecureRandom();
 
     public AI(String name) {
@@ -16,7 +15,7 @@ public class AI extends Player{
 
     @Override
     public void toDraw() {
-        double psbNum = ((double)aidb.getLeft() +bPoint)/52;
+        double psbNum = ((double)BlackJack.AIDB.getLeft() +bPoint)/52;
         double will = srd.nextDouble()%3;
         //To confirm whether will be busted
         boolean toDraw = (psbNum +will) +getPoint() < 21;

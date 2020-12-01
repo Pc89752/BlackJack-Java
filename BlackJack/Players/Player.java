@@ -12,7 +12,7 @@ public class Player {
     private String name;
     private boolean toDraw = true;
 
-    public Player (String name){
+    public Player(String name) {
         this.name = name;
     }
 
@@ -21,7 +21,7 @@ public class Player {
     }
 
     public void addSeen(Card card) {
-        System.out.println(name +" draw " +card);
+        System.out.println(name + " draw " + card);
         point += card.getValue();
         seen = card;
     }
@@ -31,19 +31,20 @@ public class Player {
     }
 
     public void addBlind() {
-        if(turn != 1)
+        if (turn != 1)
             toDraw();
-        if(toDraw == false)
+        if (toDraw == false) {
+            System.out.println(name + " give up the draw");
             return;
-            
+        }
         Card card = BlackJack.stack.pop();
         point += card.getValue();
         BlackJack.AIDB.addBlind(card.getValue());
         blind.add(card);
-        System.out.println(name +" draw a card");
+        System.out.println(name + " draw a card");
         turn++;
     }
-    
+
     public ArrayList<Card> getBlind() {
         return blind;
     }
@@ -62,7 +63,10 @@ public class Player {
     }
 
     public void toDraw() {
-        
+
     }
 
+    public boolean isToDraw() {
+        return toDraw;
+    }
 }
