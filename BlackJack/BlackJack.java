@@ -1,6 +1,8 @@
 package BlackJack;
 
+import java.util.ArrayList;
 import java.util.Stack;
+import java.security.SecureRandom;
 
 import BlackJack.Players.*;
 import BlackJack.Cards.*;
@@ -31,7 +33,6 @@ public class BlackJack {
         drawSeen(); // Draw Seen
 
         // Draw Blind
-        // FIXME Doesnt need to say "Give up the draw" every time.
         do {
             drawBlind();
         } while (isDrawing());
@@ -42,11 +43,22 @@ public class BlackJack {
     }
 
     public void shuffle() {
+        SecureRandom srd =new SecureRandom();
+        ArrayList<Card> fourDeck = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (Card card : deck.getDeck()) {
-                stack.add(card);
+                fourDeck.add(card);
             }
         }
+
+        for (int i = 0; i < fourDeck.size(); i++) {
+            int another = Math.abs(srd.nextInt() % 52);
+            Card temp = fourDeck.get(i);
+            fourDeck.set(i, fourDeck.get(another));
+            fourDeck.set(another, temp);
+        }
+
+        stack.addAll(fourDeck);
         AIDB.shuffle();
     }
 

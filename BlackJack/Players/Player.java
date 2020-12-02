@@ -1,11 +1,12 @@
 package BlackJack.Players;
 
 import java.util.ArrayList;
+
 import BlackJack.BlackJack;
 import BlackJack.Cards.Card;
 
 public class Player {
-    private int turn = 1;
+    // private int turn = 1;
     private Card seen;
     private ArrayList<Card> blind = new ArrayList<>();
     private int point = 0;
@@ -22,7 +23,11 @@ public class Player {
 
     public void addSeen(Card card) {
         System.out.println(name + " draw " + card);
-        point += card.getValue();
+        //When draw ACE , point could be 11
+        if(card.getRank().toString().equals("ACE") && point +11 <=21){
+            point += 11;
+        }else
+            point += card.getValue();
         seen = card;
     }
 
@@ -31,18 +36,21 @@ public class Player {
     }
 
     public void addBlind() {
-        if (turn != 1)
-            toDraw();
-        if (toDraw == false) {
-            System.out.println(name + " give up the draw");
+        if (!toDraw)
             return;
-        }
+
         Card card = BlackJack.stack.pop();
-        point += card.getValue();
-        BlackJack.AIDB.addBlind(card.getValue());
+        //When draw ACE , point could be 11
+        if(card.getRank().toString().equals("ACE") && point +11 <=21){
+            point += 11;
+        }else
+            point += card.getValue();
         blind.add(card);
         System.out.println(name + " draw a card");
-        turn++;
+        // turn++;
+        bust();
+        if (toDraw)
+            toDraw();
     }
 
     public ArrayList<Card> getBlind() {
@@ -54,11 +62,24 @@ public class Player {
     }
 
     public void cleanHand() {
-        turn = 0;
+        // turn = 0;
+        if(point == 0)
+            return;
+        ArrayList<Card> handCards = new ArrayList<>();
+        handCards.add(seen);
+        handCards.addAll(blind);
+        System.out.println(name +" hand cards are " +handCards);
+
+        BlackJack.AIDB.minusLeft(point -seen.getValue());
+        point = 0;
+        seen = null;
         blind.clear();
     }
 
     public void setToDraw(boolean toDraw) {
+        if(toDraw)
+            return;
+        System.out.println(name + " stop to draw");
         this.toDraw = toDraw;
     }
 
@@ -68,5 +89,13 @@ public class Player {
 
     public boolean isToDraw() {
         return toDraw;
+    }
+
+    public void bust() {
+        if(point > 21){
+            System.out.println(name +" busted");
+            cleanHand();
+            setToDraw(false);
+        }
     }
 }

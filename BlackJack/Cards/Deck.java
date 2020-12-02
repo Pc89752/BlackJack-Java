@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.security.SecureRandom;
 
 public class Deck {
-    SecureRandom srd =new SecureRandom();
+    SecureRandom srd = new SecureRandom();
     private ArrayList<Card> deck = new ArrayList<>();
 
     public Deck() {
@@ -16,16 +16,15 @@ public class Deck {
     }
 
     public void shuffle() {
-        for (Card card : deck) {
-            int index = Math.abs(srd.nextInt()%52);
-            Card temp = card;
-            card = deck.get(index);
-            deck.set(index, temp);
+        for (int i = 0; i < deck.size(); i++) {
+            int another = Math.abs(srd.nextInt() % 52);
+            Card temp = deck.get(i);
+            deck.set(i, deck.get(another));
+            deck.set(another, temp);
         }
     }
 
     public ArrayList<Card> getDeck() {
-        shuffle();
         return deck;
     }
 }
