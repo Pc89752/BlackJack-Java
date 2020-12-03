@@ -37,9 +37,19 @@ public class BlackJack {
             drawBlind();
         } while (isDrawing());
 
-        // TODO Close Accounts
+        //Settle
+        settle();
+        
+    }
 
-        // TODO Comparing points
+    public void settle() {
+        int DPoint = dealer.getPoint();
+        System.out.println("Dealer has " +DPoint);
+        dealer.cleanHand();
+        user.settle(DPoint);
+        for (AI ai : AIDB.getAIList()) {
+            ai.settle(DPoint);
+        }
     }
 
     public void shuffle() {

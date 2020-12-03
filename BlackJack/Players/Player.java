@@ -9,7 +9,7 @@ public class Player {
     // private int turn = 1;
     private Card seen;
     private ArrayList<Card> blind = new ArrayList<>();
-    private int point = 0;
+    private int points = 0;
     private String name;
     private boolean toDraw = true;
 
@@ -24,10 +24,10 @@ public class Player {
     public void addSeen(Card card) {
         System.out.println(name + " draw " + card);
         //When draw ACE , point could be 11
-        if(card.getRank().toString().equals("ACE") && point +11 <=21){
-            point += 11;
+        if(card.getRank().toString().equals("ACE") && points +11 <=21){
+            points += 11;
         }else
-            point += card.getValue();
+            points += card.getValue();
         seen = card;
     }
 
@@ -41,10 +41,10 @@ public class Player {
 
         Card card = BlackJack.stack.pop();
         //When draw ACE , point could be 11
-        if(card.getRank().toString().equals("ACE") && point +11 <=21){
-            point += 11;
+        if(card.getRank().toString().equals("ACE") && points +11 <=21){
+            points += 11;
         }else
-            point += card.getValue();
+            points += card.getValue();
         blind.add(card);
         System.out.println(name + " draw a card");
         // turn++;
@@ -58,20 +58,20 @@ public class Player {
     }
 
     public int getPoint() {
-        return point;
+        return points;
     }
 
     public void cleanHand() {
         // turn = 0;
-        if(point == 0)
+        if(points == 0)
             return;
         ArrayList<Card> handCards = new ArrayList<>();
         handCards.add(seen);
         handCards.addAll(blind);
         System.out.println(name +" hand cards are " +handCards);
 
-        BlackJack.AIDB.minusLeft(point -seen.getValue());
-        point = 0;
+        BlackJack.AIDB.minusLeft(points -seen.getValue());
+        points = 0;
         seen = null;
         blind.clear();
     }
@@ -92,10 +92,22 @@ public class Player {
     }
 
     public void bust() {
-        if(point > 21){
+        if(points > 21){
             System.out.println(name +" busted");
             cleanHand();
             setToDraw(false);
         }
+    }
+
+    public void settle(int DPoints) {
+        System.out.println(name +" has " +points);
+        if(DPoints < points){
+            System.out.println(name +" won");
+        }else if(DPoints > points){
+            System.out.println(name +" lost");
+        }else{
+            System.out.println(name +" tied with dealer");
+        }
+        cleanHand();
     }
 }

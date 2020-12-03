@@ -1,6 +1,6 @@
 package BlackJack.Players;
 
-public class Dealer extends Player{
+public class Dealer extends Player {
 
     public Dealer() {
         super("Dealer");
@@ -8,7 +8,8 @@ public class Dealer extends Player{
 
     @Override
     public void toDraw() {
-        super.setToDraw(false);
+        if (this.getPoint() >= 17)
+            setToDraw(false);
     }
-    
+
 }
