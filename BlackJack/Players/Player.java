@@ -40,7 +40,7 @@ public class Player {
             return;
 
         Card card = BlackJack.stack.pop();
-        //When draw ACE , point could be 11
+        //When draw ACE , point could be 11 if not over 21 after the adding .
         if(card.getRank().toString().equals("ACE") && points +11 <=21){
             points += 11;
         }else
@@ -77,10 +77,10 @@ public class Player {
     }
 
     public void setToDraw(boolean toDraw) {
+        this.toDraw = toDraw;
         if(toDraw)
             return;
         System.out.println(name + " stop to draw");
-        this.toDraw = toDraw;
     }
 
     public void toDraw() {
@@ -109,5 +109,9 @@ public class Player {
             System.out.println(name +" tied with dealer");
         }
         cleanHand();
+    }
+
+    public void start() {
+        setToDraw(true);
     }
 }

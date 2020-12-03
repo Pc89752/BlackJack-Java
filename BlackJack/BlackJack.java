@@ -28,23 +28,42 @@ public class BlackJack {
         user = new User(console.getString());
         setAI(); // Set AI
 
-        shuffle(); // Insert cards in the stack
-
-        drawSeen(); // Draw Seen
-
-        // Draw Blind
         do {
-            drawBlind();
-        } while (isDrawing());
+            if (stack.size() < 52) {
+                shuffle(); // Insert cards in the stack
+            }
 
-        //Settle
-        settle();
-        
+            start();
+
+            drawSeen(); // Draw Seen
+
+            // Draw Blind
+            do {
+                drawBlind();
+            } while (isDrawing());
+
+            // Settle
+            settle();
+
+        } while (toContinue());
+    }
+
+    public void start() {
+        user.start();
+        for (AI AI : AIDB.getAIList()) {
+            AI.start();
+        }
+        dealer.start();
+    }
+
+    public boolean toContinue() {
+        System.out.print("Continue to play ? (Y/N): ");
+        return console.getYorN();
     }
 
     public void settle() {
         int DPoint = dealer.getPoint();
-        System.out.println("Dealer has " +DPoint);
+        System.out.println("Dealer has " + DPoint);
         dealer.cleanHand();
         user.settle(DPoint);
         for (AI ai : AIDB.getAIList()) {
@@ -53,7 +72,7 @@ public class BlackJack {
     }
 
     public void shuffle() {
-        SecureRandom srd =new SecureRandom();
+        SecureRandom srd = new SecureRandom();
         ArrayList<Card> fourDeck = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (Card card : deck.getDeck()) {
