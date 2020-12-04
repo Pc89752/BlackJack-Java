@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+*.txt		text
+*.jpg		-text
+*.vcproj	text eol=crlf
+*.sh		text eol=lf
+*.py		eol=lf

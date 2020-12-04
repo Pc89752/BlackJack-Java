@@ -21,6 +21,15 @@ public class AIDB {
         return AIList;
     }
 
+    public void kickOut() {
+        for (AI ai : AIList) {
+            if(ai.getFund() <= 0){
+                ai.kickOut();
+                AIList.remove(ai);
+            }
+        }
+    }
+
     public int getLeft() {
         return left;
     }

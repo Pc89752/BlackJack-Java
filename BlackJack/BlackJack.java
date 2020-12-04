@@ -8,9 +8,6 @@ import BlackJack.Players.*;
 import BlackJack.Cards.*;
 
 public class BlackJack {
-
-    Console console = new Console();
-
     public static AIDB AIDB;
     public static User user;
     public static Dealer dealer = new Dealer();
@@ -25,18 +22,21 @@ public class BlackJack {
     public void run() {
         // Constructing User and input name :
         System.out.print("What is your name ? :");
-        user = new User(console.getString());
+        user = new User(Console.getString());
         setAI(); // Set AI
 
         do {
             System.out.println();
+
+            placeBet();
+
             if (stack.size() < 52) {
                 shuffle(); // Insert cards in the stack
             }
 
             start();
 
-            //Draw seen , Dealer addBlind at second time
+            // Draw seen , Dealer draw a blind at second time
             drawSeen();
 
             // Draw Blind
@@ -47,7 +47,22 @@ public class BlackJack {
             // Settle
             settle();
 
+            kickOut();
+
         } while (toContinue());
+    }
+
+/****************************************************************** */
+/****************************************************************** */
+
+    public void kickOut() {
+        user.kickOut();
+        AIDB.kickOut();
+    }
+
+    public void placeBet() {
+        user.addChip();
+        AIDB.getAIList().forEach(e -> e.addChip());
     }
 
     public void start() {
@@ -60,7 +75,7 @@ public class BlackJack {
 
     public boolean toContinue() {
         System.out.print("Continue to play ? (Y/N): ");
-        return console.getYorN();
+        return Console.getYorN();
     }
 
     public void settle() {
@@ -96,7 +111,7 @@ public class BlackJack {
     public void setAI() {
         System.out.println("How many AI do you want ? (0~5): ");
         while (true) {
-            int num = console.getInt();
+            int num = Console.getInt();
             if (num < 0 || num > 5) {
                 System.out.println("Please enter correctly");
                 continue;
@@ -114,7 +129,7 @@ public class BlackJack {
         }
         dealer.addSeen(stack.pop());
 
-        //Dealer addBlind at second time
+        // Dealer addBlind at second time
         user.addSeen(stack.pop());
         for (AI ai : AIDB.getAIList()) {
             ai.addSeen(stack.pop());

@@ -13,6 +13,11 @@ public class AI extends Player{
         super(name);
     }
 
+    public void addChip() {
+        int chip = (int)Math.abs(srd.nextInt()%getFund() +1);
+        addChip(chip);
+    }
+
     @Override
     public void toDraw() {
         double psbNum = ((double)BlackJack.AIDB.getLeft() +bPoint)/52;

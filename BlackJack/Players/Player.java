@@ -12,13 +12,37 @@ public class Player {
     private int points = 0;
     private String name;
     private boolean toDraw = true;
+    private int fund = 1000;
+    private int chip = 0;
 
     public Player(String name) {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String toString() {
         return name;
+    }
+
+    public int getFund() {
+        return fund;
+    }
+
+    public void addFund(int fund) {
+        this.fund += fund;
+    }
+
+    public int getChip() {
+        return chip;
+    }
+
+    public void addChip(int chip) {
+        System.out.println(name +" place a bet of $" +chip);
+        this.fund -= chip;
+        this.chip += chip;
     }
 
     public void addSeen(Card card) {
@@ -103,12 +127,19 @@ public class Player {
         System.out.println(name + " has " + points);
         if (DPoints < points) {
             System.out.println(name + " won");
+            this.addFund(chip *2);
         } else if (DPoints > points) {
             System.out.println(name + " lost");
         } else {
             System.out.println(name + " tied with dealer");
+            this.addFund(chip);
         }
+
         cleanHand();
+    }
+
+    public void kickOut() {
+        System.out.println(getName() +" has been kicked out od the game");
     }
 
     public void start() {

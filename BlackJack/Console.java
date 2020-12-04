@@ -3,9 +3,9 @@ package BlackJack;
 import java.util.Scanner;
 
 public class Console {
-    Scanner sc=new Scanner(System.in);
+    static Scanner sc=new Scanner(System.in);
 
-    public int getInt() {
+    public static int getInt() {
         while (true) {
             try {
                 int input = sc.nextInt();
@@ -18,7 +18,7 @@ public class Console {
         }
     }
 
-    public String getString(String[] strs) {
+    public static String getString(String[] strs) {
         while (true) {
             String input = sc.nextLine().toUpperCase();
             for (String string : strs) {
@@ -30,11 +30,11 @@ public class Console {
         }
     }
 
-    public String getString() {
+    public static String getString() {
         return sc.nextLine();
     }
 
-    public double getDouble(String str){
+    public static double getDouble(String str){
         while (true) {
             try {
                 System.out.print(str);
@@ -48,7 +48,7 @@ public class Console {
         }
     }
 
-    public boolean getYorN() {
+    public static boolean getYorN() {
         while (true) {
             switch (getString().toUpperCase()) {
                 case "Y":
