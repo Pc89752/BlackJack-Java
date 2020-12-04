@@ -29,13 +29,15 @@ public class BlackJack {
         setAI(); // Set AI
 
         do {
+            System.out.println();
             if (stack.size() < 52) {
                 shuffle(); // Insert cards in the stack
             }
 
             start();
 
-            drawSeen(); // Draw Seen
+            //Draw seen , Dealer addBlind at second time
+            drawSeen();
 
             // Draw Blind
             do {
@@ -112,6 +114,12 @@ public class BlackJack {
         }
         dealer.addSeen(stack.pop());
 
+        //Dealer addBlind at second time
+        user.addSeen(stack.pop());
+        for (AI ai : AIDB.getAIList()) {
+            ai.addSeen(stack.pop());
+        }
+        dealer.addBlind();
     }
 
     public void drawBlind() {

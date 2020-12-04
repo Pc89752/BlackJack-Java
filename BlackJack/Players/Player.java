@@ -7,7 +7,7 @@ import BlackJack.Cards.Card;
 
 public class Player {
     // private int turn = 1;
-    private Card seen;
+    private ArrayList<Card> seen = new ArrayList<>();
     private ArrayList<Card> blind = new ArrayList<>();
     private int points = 0;
     private String name;
@@ -23,34 +23,34 @@ public class Player {
 
     public void addSeen(Card card) {
         System.out.println(name + " draw " + card);
-        //When draw ACE , point could be 11
-        if(card.getRank().toString().equals("ACE") && points +11 <=21){
+        // When draw ACE , point could be 11
+        if (card.getRank().toString().equals("ACE") && points + 11 <= 21) {
             points += 11;
-        }else
+        } else
             points += card.getValue();
-        seen = card;
+        seen.add(card);
     }
 
-    public Card getSeen() {
+    public ArrayList<Card> getSeen() {
         return seen;
     }
 
     public void addBlind() {
+        if (toDraw)
+            toDraw();
         if (!toDraw)
             return;
 
         Card card = BlackJack.stack.pop();
-        //When draw ACE , point could be 11 if not over 21 after the adding .
-        if(card.getRank().toString().equals("ACE") && points +11 <=21){
+        // When draw ACE , point could be 11 if not over 21 after the adding
+        if (card.getRank().toString().equals("ACE") && points + 11 <= 21) {
             points += 11;
-        }else
+        } else
             points += card.getValue();
         blind.add(card);
-        System.out.println(name + " draw a card");
+        System.out.println("\n" +name + " draw a card");
         // turn++;
         bust();
-        if (toDraw)
-            toDraw();
     }
 
     public ArrayList<Card> getBlind() {
@@ -63,22 +63,22 @@ public class Player {
 
     public void cleanHand() {
         // turn = 0;
-        if(points == 0)
+        if (points == 0)
             return;
         ArrayList<Card> handCards = new ArrayList<>();
-        handCards.add(seen);
+        handCards.addAll(seen);
         handCards.addAll(blind);
-        System.out.println(name +" hand cards are " +handCards);
-
-        BlackJack.AIDB.minusLeft(points -seen.getValue());
+        System.out.println(name + " hand cards are " + handCards);
+        seen.forEach(e -> points -= e.getValue());
+        BlackJack.AIDB.minusLeft(points);
         points = 0;
-        seen = null;
+        seen.clear();
         blind.clear();
     }
 
     public void setToDraw(boolean toDraw) {
         this.toDraw = toDraw;
-        if(toDraw)
+        if (toDraw)
             return;
         System.out.println(name + " stop to draw");
     }
@@ -92,21 +92,21 @@ public class Player {
     }
 
     public void bust() {
-        if(points > 21){
-            System.out.println(name +" busted");
+        if (points > 21) {
+            System.out.println(name + " busted");
             cleanHand();
             setToDraw(false);
         }
     }
 
     public void settle(int DPoints) {
-        System.out.println(name +" has " +points);
-        if(DPoints < points){
-            System.out.println(name +" won");
-        }else if(DPoints > points){
-            System.out.println(name +" lost");
-        }else{
-            System.out.println(name +" tied with dealer");
+        System.out.println(name + " has " + points);
+        if (DPoints < points) {
+            System.out.println(name + " won");
+        } else if (DPoints > points) {
+            System.out.println(name + " lost");
+        } else {
+            System.out.println(name + " tied with dealer");
         }
         cleanHand();
     }

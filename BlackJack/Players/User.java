@@ -16,10 +16,10 @@ public class User extends Player{
     @Override
     public void toDraw() {
         ArrayList<Card> hand = new ArrayList<>();
-        hand.add(getSeen());
+        hand.addAll(getSeen());
         hand.addAll(getBlind());
-        System.out.println("Your card : " +hand);
+        System.out.println("\nYour card : " +hand);
         System.out.print("Continue to draw ? (y/n): ");
-        super.setToDraw(cs.getYorN());
+        setToDraw(cs.getYorN());
     }
 }
