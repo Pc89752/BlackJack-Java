@@ -134,6 +134,7 @@ public class Player {
             System.out.println(name + " tied with dealer");
             this.addFund(chip);
         }
+        chip = 0;
 
         cleanHand();
     }
